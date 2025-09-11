@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=New+Rocker&display=swap');
+
+.header {
+  position: absolute;
+  inset: 0 0 auto 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 28px;
+  z-index: 10;
+}
+
+.left {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo {
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+}
+.brand {
+ font-family: "New Rocker";
+  color: #e6f0f3;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.nav {
+  font-family: "Inter", sans-serif;
+  display: none;
+  gap: 22px;
+  justify-content: center;
+}
+.nav a {
+  color: #d0d8de;
+  text-decoration: none;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+.nav a:hover {
+  /* opacity: 2; */
+  color: white;
+}
+
+.ctaLink {
+  font-family: "Inter";
+  justify-self: end;
+  color: #e6f0f3;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (min-width: 900px) {
+  .nav {
+    display: inline-flex;
+  }
+}

@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.containerWrapper{
+  margin: 2rem  0;
+}
+
+.section {
+  padding: 32px 0;
+  background: #fff;
+}
+
+.shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.textCol {
+}
+
+.kicker {
+  font-family: "Urbanist";  
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #E0B700;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: "Montserrat";
+  margin: 0 0 8px;
+  font-weight: 700;
+  font-size: 28px;
+  color: #111827;
+}
+
+.blurb {
+  font-family: "Urbanist"; 
+  margin: 0 0 16px;
+  color: #6b7280;
+  max-width: 56ch;
+}
+
+.steps {
+  font-family: "Open Sans";
+  display: grid;
+  gap: 18px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: #0ea5e9;
+  background: #e0f2fe;
+}
+
+.stepText {
+}
+
+.stepH {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.stepP {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.cell {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  background: #f3f4f6;
+}
+
+.cell:nth-child(1) {
+  border-top-right-radius: 50px;
+}
+.cell:nth-child(2) {
+  border-top-left-radius: 50px;
+}
+.cell:nth-child(3) {
+  border-top-right-radius: 50px;
+}
+.cell:nth-child(4) {
+  border-top-left-radius: 50px;
+}
+
+.cell img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.cell:hover img {
+  transform: scale(1.03);
+}
+
+@media (max-width: 1024px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .mediaCol {
+    order: -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 24px;
+  }
+  .grid {
+    gap: 10px;
+  }
+  .step {
+    grid-template-columns: 40px 1fr;
+  }
+  .iconWrap {
+    width: 40px;
+    height: 40px;
+  }
+}

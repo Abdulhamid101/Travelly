@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+.testimonialSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 60px 40px;
+  position: relative;
+  background: #fff;
+}
+
+.content {
+  max-width: 500px;
+  z-index: 2;
+}
+
+.kicker {
+  font-family: "Urbanist";
+  color: #f59e0b;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.heading {
+  font-family: "Montserrat";
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.brand {
+  color: #22d3a3;
+}
+
+.quote {
+  font-family: "Open Sans";
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.author {
+  font-family: "Open Sans";
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.socials {
+  display: flex;
+  gap: 12px;
+}
+
+.icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #22d3a3;
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.icon:hover {
+  background: #10b981;
+}
+
+.mapContainer {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.8;
+}
+
+.avatar {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar:hover {
+  transform: scale(1.15);
+}
+
+@media (max-width: 768px) {
+  .testimonialSection {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .mapContainer {
+    margin-top: 20px;
+    height: 300px;
+  }
+}

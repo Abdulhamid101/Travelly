@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+.hero {
+    /* margin-bottom: 4rem; */
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 100px 20px 60px;
+  color: #e7f1f3;
+  background: linear-gradient(
+      180deg,
+      rgba(5, 12, 16, 0.5),
+      rgba(5, 12, 16, 0.65)
+    ),
+    url("")
+      center/cover no-repeat;
+
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.center {
+  max-width: 900px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+   font-family: "Montserrat";
+  margin: 0 0 16px;
+  font-size: clamp(32px, 5vw, 53px);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.sub {
+   font-family: "Urbanist";
+  margin: 10px auto 26px;
+  max-width: 700px;
+  color: rgba(231, 241, 243, 0.85);
+  line-height: 1.6;
+}
+
+.cta {
+   font-family: "Urbanist";
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  background: #3AA5A8;
+  color: white;
+  font-weight: 700;
+  padding: 12px 100px;
+  border-radius: 3px;
+}
+
+.cta:hover {
+  filter: brightness(1.05);
+}
+
+.accent {
+  color: #3AA5A8;
+  position: relative;
+}
+
+.accentUnderline {
+  color: #3AA5A8;
+  position: relative;
+}
+.accentUnderline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 6px;
+  background: radial-gradient(
+      40px 8px at 20% 50%,
+      rgba(34, 184, 181, 0.3),
+      transparent 70%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(34, 184, 181, 1) 0%,
+      rgba(34, 184, 181, 0.2) 100%
+    );
+  border-radius: 999px;
+}
