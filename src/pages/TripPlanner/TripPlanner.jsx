@@ -1,20 +1,58 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./TripPlanner.module.css";
 
-const COUNTRIES = [
-  "Germany","Italy","France","Spain","Portugal","Netherlands","Belgium","Austria","Switzerland",
-  "United Kingdom","Ireland","Norway","Sweden","Finland","Denmark","Poland","Czechia","Greece",
-  "Turkey","United States","Canada","Mexico","Brazil","Argentina","South Africa","Kenya",
-  "Morocco","UAE","Qatar","Saudi Arabia","India","Singapore","Japan","South Korea","Australia",
-  "New Zealand","Nigeria","Ghana","Egypt","Tunisia"
-];
+function useCountries() {
+  const [countries, setCountries] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const ctrl = new AbortController();
+
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(
+          "https://restcountries.com/v3.1/all?fields=name,cca2",
+          { signal: ctrl.signal }
+        );
+        if (!res.ok) throw new Error("Failed to load countries");
+
+        const data = await res.json();
+        const list = data
+          .map((c) => c?.name?.common)
+          .filter(Boolean)
+          .sort((a, b) => a.localeCompare(b));
+
+        setCountries(list);
+      } catch (e) {
+        if (e.name !== "AbortError") setError(e.message || String(e));
+      } finally {
+        setLoading(false);
+      }
+    })();
+
+    return () => ctrl.abort();
+  }, []);
+
+  return { countries, loading, error };
+}
 
 const VISAS = [
-  "Schengen Visa","UK Visa","US Visa","Canadian Visa","Schengen (Multiple)","Tourist Visa",
-  "Student Visa","Transit Visa"
+  "Schengen Visa",
+  "UK Visa",
+  "US Visa",
+  "Canadian Visa",
+  "Schengen (Multiple)",
+  "Tourist Visa",
+  "Student Visa",
+  "Transit Visa",
 ];
+
 const fmtMoney = (n) =>
-  new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(Number(n || 0));
+  new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(
+    Number(n || 0)
+  );
 
 function useOutsideClose(ref, onClose) {
   useEffect(() => {
@@ -25,11 +63,14 @@ function useOutsideClose(ref, onClose) {
     return () => document.removeEventListener("mousedown", h);
   }, [onClose, ref]);
 }
+
 function SingleSelect({ label, placeholder, items, value, onChange }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const boxRef = useRef(null);
+
   useOutsideClose(boxRef, () => setOpen(false));
+
   const filtered = useMemo(
     () => items.filter((i) => i.toLowerCase().includes(q.toLowerCase())),
     [items, q]
@@ -73,7 +114,9 @@ function SingleSelect({ label, placeholder, items, value, onChange }) {
                   {i}
                 </button>
               ))}
-              {!filtered.length && <div className={styles.empty}>No results</div>}
+              {!filtered.length && (
+                <div className={styles.empty}>No results</div>
+              )}
             </div>
           </div>
         )}
@@ -81,11 +124,14 @@ function SingleSelect({ label, placeholder, items, value, onChange }) {
     </div>
   );
 }
+
 function MultiSelect({ label, placeholder, items, values, onChange }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const boxRef = useRef(null);
+
   useOutsideClose(boxRef, () => setOpen(false));
+
   const filtered = useMemo(
     () => items.filter((i) => i.toLowerCase().includes(q.toLowerCase())),
     [items, q]
@@ -154,7 +200,9 @@ function MultiSelect({ label, placeholder, items, values, onChange }) {
                   </label>
                 );
               })}
-              {!filtered.length && <div className={styles.empty}>No results</div>}
+              {!filtered.length && (
+                <div className={styles.empty}>No results</div>
+              )}
             </div>
           </div>
         )}
@@ -166,10 +214,19 @@ function MultiSelect({ label, placeholder, items, values, onChange }) {
 export default function TripPlannerModal({ isOpen, onClose, onSubmit }) {
   const [budget, setBudget] = useState(5_000_000);
   const [passports, setPassports] = useState([]);
-  const [haveVisa, setHaveVisa] = useState("");
+  const [haveVisa, setHaveVisa] = useState([]);
   const [fromCountry, setFromCountry] = useState("");
   const [toCountry, setToCountry] = useState("");
   const [date, setDate] = useState("");
+
+  
+  const {
+    countries,
+    loading: loadingCountries,
+    error: countriesError,
+  } = useCountries();
+
+  const countryItems = countries; 
 
   useEffect(() => {
     if (!isOpen) return;
@@ -200,12 +257,23 @@ export default function TripPlannerModal({ isOpen, onClose, onSubmit }) {
   }
 
   return (
-    <div className={styles.overlay} onClick={onClose} aria-modal="true" role="dialog">
+    <div
+      className={styles.overlay}
+      onClick={onClose}
+      aria-modal="true"
+      role="dialog"
+    >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <header className={styles.header}>
           <div>
             <h3>Plan your perfect trip</h3>
             <p>Just a few details and we will find the best options for you.</p>
+            {loadingCountries && (
+              <small className={styles.muted}>Loading countries…</small>
+            )}
+            {countriesError && (
+              <small className={styles.warning}>Couldn’t load countries.</small>
+            )}
           </div>
           <button className={styles.close} aria-label="Close" onClick={onClose}>
             ×
@@ -221,7 +289,9 @@ export default function TripPlannerModal({ isOpen, onClose, onSubmit }) {
                 inputMode="numeric"
                 value={fmtMoney(budget)}
                 onChange={(e) =>
-                  setBudget(Number(String(e.target.value).replace(/[^\d]/g, "")) || 0)
+                  setBudget(
+                    Number(String(e.target.value).replace(/[^\d]/g, "")) || 0
+                  )
                 }
                 className={styles.budgetInput}
               />
@@ -242,37 +312,39 @@ export default function TripPlannerModal({ isOpen, onClose, onSubmit }) {
 
           <MultiSelect
             label="What passport do you hold?"
-            placeholder="Select country"
-            items={COUNTRIES}
+            placeholder={loadingCountries ? "Loading…" : "Select country"}
+            items={countryItems}
             values={passports}
             onChange={setPassports}
           />
 
           <MultiSelect
-            label="What country's visa do you already have?"
-            placeholder="Select country/visa"
+            label="What visa(s) do you already have?"
+            placeholder="Select visa type"
             items={VISAS}
-            value={haveVisa}
+            values={haveVisa}
             onChange={setHaveVisa}
           />
 
-          {/* From / To */}
           <SingleSelect
             label="Where are you leaving from?"
-            placeholder="Select your current country"
-            items={COUNTRIES}
+            placeholder={
+              loadingCountries ? "Loading…" : "Select your current country"
+            }
+            items={countryItems}
             value={fromCountry}
             onChange={setFromCountry}
           />
           <SingleSelect
             label="Where are you travelling to?"
-            placeholder="Select destination country"
-            items={COUNTRIES}
+            placeholder={
+              loadingCountries ? "Loading…" : "Select destination country"
+            }
+            items={countryItems}
             value={toCountry}
             onChange={setToCountry}
           />
 
-          {/* Date */}
           <div className={styles.field}>
             <label>Departure Date</label>
             <div className={styles.select}>
@@ -288,7 +360,13 @@ export default function TripPlannerModal({ isOpen, onClose, onSubmit }) {
             </div>
           </div>
 
-          <button className={styles.cta} type="submit">Find My Trip</button>
+          <button
+            className={styles.cta}
+            type="submit"
+            disabled={loadingCountries || !countryItems.length}
+          >
+            Find My Trip
+          </button>
         </form>
       </div>
     </div>
