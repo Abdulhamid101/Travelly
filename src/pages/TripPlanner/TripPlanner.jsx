@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ add
 import styles from "./TripPlanner.module.css";
 
 function useCountries() {
@@ -8,7 +9,6 @@ function useCountries() {
 
   useEffect(() => {
     const ctrl = new AbortController();
-
     (async () => {
       try {
         setLoading(true);
@@ -17,13 +17,11 @@ function useCountries() {
           { signal: ctrl.signal }
         );
         if (!res.ok) throw new Error("Failed to load countries");
-
         const data = await res.json();
         const list = data
           .map((c) => c?.name?.common)
           .filter(Boolean)
           .sort((a, b) => a.localeCompare(b));
-
         setCountries(list);
       } catch (e) {
         if (e.name !== "AbortError") setError(e.message || String(e));
@@ -31,7 +29,6 @@ function useCountries() {
         setLoading(false);
       }
     })();
-
     return () => ctrl.abort();
   }, []);
 
@@ -57,7 +54,7 @@ const fmtMoney = (n) =>
 function useOutsideClose(ref, onClose) {
   useEffect(() => {
     function h(e) {
-      if (ref.current && !ref.current.contains(e.target)) onClose();
+      if (ref.current && !ref.current.contains(e.target)) onClose?.();
     }
     document.addEventListener("mousedown", h);
     return () => document.removeEventListener("mousedown", h);
@@ -68,7 +65,6 @@ function SingleSelect({ label, placeholder, items, value, onChange }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const boxRef = useRef(null);
-
   useOutsideClose(boxRef, () => setOpen(false));
 
   const filtered = useMemo(
@@ -129,7 +125,6 @@ function MultiSelect({ label, placeholder, items, values, onChange }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const boxRef = useRef(null);
-
   useOutsideClose(boxRef, () => setOpen(false));
 
   const filtered = useMemo(
@@ -212,6 +207,8 @@ function MultiSelect({ label, placeholder, items, values, onChange }) {
 }
 
 export default function TripPlannerModal({ isOpen, onClose, onSubmit }) {
+  const navigate = useNavigate();
+
   const [budget, setBudget] = useState(5_000_000);
   const [passports, setPassports] = useState([]);
   const [haveVisa, setHaveVisa] = useState([]);
@@ -219,14 +216,13 @@ export default function TripPlannerModal({ isOpen, onClose, onSubmit }) {
   const [toCountry, setToCountry] = useState("");
   const [date, setDate] = useState("");
 
-  
   const {
     countries,
     loading: loadingCountries,
     error: countriesError,
   } = useCountries();
 
-  const countryItems = countries; 
+  const countryItems = countries;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -244,7 +240,8 @@ export default function TripPlannerModal({ isOpen, onClose, onSubmit }) {
 
   function submitHandler(e) {
     e.preventDefault();
-    const payload = {
+
+    const criteria = {
       budget,
       passports,
       haveVisa,
@@ -252,8 +249,14 @@ export default function TripPlannerModal({ isOpen, onClose, onSubmit }) {
       toCountry,
       date,
     };
-    onSubmit ? onSubmit(payload) : console.log("TripPlanner submit:", payload);
-    onClose?.();
+
+    onSubmit?.(criteria);
+    sessionStorage.setItem(
+      "tripResults",
+      JSON.stringify({ trips: null, criteria })
+    );
+
+    navigate("/search", { state: { criteria }, replace: true });
   }
 
   return (
