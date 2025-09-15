@@ -9,7 +9,7 @@ export default function FindingTripModal({ open = true, onCancel }) {
   useEffect(() => {
     if (open) {
       const timer = setTimeout(() => {
-        navigate("/trips", { replace: true }); // ✅ prevent back to /search
+        navigate("/trips", { replace: true }); 
       }, 3000);
       return () => clearTimeout(timer);
     }
@@ -19,7 +19,7 @@ export default function FindingTripModal({ open = true, onCancel }) {
 
   const handleCancel = () => {
     if (onCancel) onCancel();
-    else navigate("/", { replace: true }); // ✅ consistent behavior
+    else navigate("/", { replace: true });
   };
 
   return (
