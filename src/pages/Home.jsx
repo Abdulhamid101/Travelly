@@ -8,11 +8,11 @@ import PromoSubscribe from "../components/PromoSubscribe/PromoSubscribe.jsx";
 export default function Home() {
   return (
     <>
-      <Hero />
-      <Steps />
-      <DestinationHero />
-      <TestimonialMap />
-      <PromoSubscribe />
+      <Hero  />
+      <Steps id="Steps" />
+       <DestinationHero id="Destinations" />
+      <TestimonialMap id="Testimonials" />
+      {/* <PromoSubscribe /> */}
     </>
   );
 }

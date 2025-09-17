@@ -61,8 +61,12 @@ function useOutsideClose(ref, onClose) {
   }, [onClose, ref]);
 }
 
+/* ===========================
+   SingleSelect (with flip-up)
+   =========================== */
 function SingleSelect({ label, placeholder, items, value, onChange }) {
   const [open, setOpen] = useState(false);
+  const [openUp, setOpenUp] = useState(false);
   const [q, setQ] = useState("");
   const boxRef = useRef(null);
   useOutsideClose(boxRef, () => setOpen(false));
@@ -71,6 +75,13 @@ function SingleSelect({ label, placeholder, items, value, onChange }) {
     () => items.filter((i) => i.toLowerCase().includes(q.toLowerCase())),
     [items, q]
   );
+
+  useEffect(() => {
+    if (!open || !boxRef.current) return;
+    const rect = boxRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    setOpenUp(spaceBelow < 260); // 260px ~ .menu max-height
+  }, [open]);
 
   return (
     <div className={styles.field}>
@@ -87,7 +98,7 @@ function SingleSelect({ label, placeholder, items, value, onChange }) {
         </button>
 
         {open && (
-          <div className={styles.menu}>
+          <div className={`${styles.menu} ${openUp ? styles.openUp : ""}`}>
             <div className={styles.searchRow}>
               <input
                 autoFocus
@@ -121,8 +132,12 @@ function SingleSelect({ label, placeholder, items, value, onChange }) {
   );
 }
 
+/* ===========================
+   MultiSelect (with flip-up)
+   =========================== */
 function MultiSelect({ label, placeholder, items, values, onChange }) {
   const [open, setOpen] = useState(false);
+  const [openUp, setOpenUp] = useState(false);
   const [q, setQ] = useState("");
   const boxRef = useRef(null);
   useOutsideClose(boxRef, () => setOpen(false));
@@ -131,6 +146,13 @@ function MultiSelect({ label, placeholder, items, values, onChange }) {
     () => items.filter((i) => i.toLowerCase().includes(q.toLowerCase())),
     [items, q]
   );
+
+  useEffect(() => {
+    if (!open || !boxRef.current) return;
+    const rect = boxRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    setOpenUp(spaceBelow < 260);
+  }, [open]);
 
   function toggle(v) {
     if (values.includes(v)) onChange(values.filter((x) => x !== v));
@@ -172,7 +194,7 @@ function MultiSelect({ label, placeholder, items, values, onChange }) {
         </button>
 
         {open && (
-          <div className={styles.menu}>
+          <div className={`${styles.menu} ${openUp ? styles.openUp : ""}`}>
             <div className={styles.searchRow}>
               <input
                 autoFocus
@@ -338,6 +360,7 @@ export default function TripPlannerModal({ isOpen, onClose, onSubmit }) {
             value={fromCountry}
             onChange={setFromCountry}
           />
+
           <SingleSelect
             label="Where are you travelling to?"
             placeholder={

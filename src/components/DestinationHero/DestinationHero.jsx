@@ -3,8 +3,8 @@ import styles from "./DestinationHero.module.css";
 import image1 from "../../assets/Dheroimg1.png";
 import image2 from "../../assets/Dheroimg2.png";
 
-
 export default function DestinationHero({
+  id = "Destinations",
   kicker = "POPULAR DESTINATIONS",
   title = "THAILAND",
   blurb = "Plan, book and embark on your dream adventures with our expert guidance and tailored experience.",
@@ -38,20 +38,20 @@ export default function DestinationHero({
 
   useEffect(() => {
     if (roll.length < 3) return;
-    const id = setInterval(() => {
+    const idTimer = setInterval(() => {
       setRoll((prev) => {
         const [first, ...rest] = prev;
-        const next = [...rest, first];
-        return next;
+        return [...rest, first];
       });
     }, slideInterval);
-    return () => clearInterval(id);
+    return () => clearInterval(idTimer);
   }, [roll.length, slideInterval]);
 
   if (trio.length < 3) return null;
 
   return (
-    <section className={styles.hero}>
+    <section id={id} className={styles.hero}>
+      {" "}
       <div className={styles.bg}>
         <div
           className={`${styles.bgImg} ${fading ? styles.fadeOut : ""}`}
@@ -65,13 +65,14 @@ export default function DestinationHero({
         />
         <div className={styles.vignette} aria-hidden />
       </div>
-
       <div className={styles.shell}>
         <div className={styles.left}>
           <p className={styles.kicker}>{kicker}</p>
           <h1 className={styles.title}>{title}</h1>
           <p className={styles.blurb}>{blurb}</p>
-          <button className={styles.cta} onClick={onCta}>{ctaText}</button>
+          <button className={styles.cta} onClick={onCta}>
+            {ctaText}
+          </button>
         </div>
 
         <div className={styles.cards}>

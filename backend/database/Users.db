@@ -1,0 +1,3 @@
+{"name":"kafidipe","email":"kafidipe@gmail.com","password":"$2b$10$/zYvivMIGqpvMLlq8uvWBO8Qihv9zVHeltlHvOT93u6L2ar/0vH0O","_id":"81hwF7MsdF3QwIjJ","createdAt":{"$$date":1758128090143},"updatedAt":{"$$date":1758128090143}}
+{"$$indexCreated":{"fieldName":"email","unique":false,"sparse":false}}
+{"$$indexCreated":{"fieldName":"email","unique":false}}

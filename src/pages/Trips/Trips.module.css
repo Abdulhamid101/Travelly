@@ -43,7 +43,7 @@
   grid-auto-flow: column;
   align-items: center;
   gap: 10px;
-  background: #ffffff;
+  background: #f3f4f6;
   border: 1px solid rgba(2, 6, 23, 0.08);
   border-radius: 10px;
   box-shadow: 0 6px 18px rgba(2, 6, 23, 0.1);
@@ -62,10 +62,10 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: #f3f4f6;
-  color: #0f172a;
+  background: transparent;
+  color: #bbbcbe;
   border: 1px solid #e5e7eb;
-  border-radius: 999px;
+  border-radius: 8px;
   padding: 10px 14px;
   white-space: nowrap;
 }
@@ -86,7 +86,7 @@
   color: #0f172a;
   font-weight: 800;
   border: 1.5px solid #0f172a;
-  border-radius: 8px;
+  border-radius: 2px;
   cursor: pointer;
 }
 .editBtn:hover {

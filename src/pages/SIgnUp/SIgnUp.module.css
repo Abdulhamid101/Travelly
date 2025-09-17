@@ -1,0 +1,156 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f7fbff;
+}
+.main {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 40px 16px 80px;
+}
+.card {
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  border: 1px solid #e6eefc;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 8px 30px rgba(6, 32, 70, 0.06);
+}
+.card h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+  color: #0b1f3a;
+}
+.sub {
+  margin: 0 0 12px;
+  color: #5a6b85;
+  font-size: 14px;
+}
+
+/* server error banner */
+.banner {
+  background: #fff5f5;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+.label {
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+  color: #0b1f3a;
+}
+.input {
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #d6e4ff;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+}
+.input:focus {
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.25);
+}
+.bad {
+  border-color: #ef4444;
+}
+.err {
+  color: #ef4444;
+  font-size: 12px;
+}
+.hint {
+  color: #6b7b93;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.pwdRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+.ghost {
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #d6e4ff;
+  background: #f7fbff;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.primary {
+  height: 46px;
+  border: none;
+  border-radius: 12px;
+  background: #007bff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.meter {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin: 10px 0 6px;
+}
+.bar {
+  height: 6px;
+  border-radius: 6px;
+  background: #e4edff;
+}
+.on {
+  background: #007bff;
+}
+
+.checkline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #22324a;
+}
+.alt {
+  text-align: center;
+  color: #5a6b85;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* Success overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 15, 33, 0.45);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+.modal {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  display: grid;
+  gap: 12px;
+  text-align: center;
+}

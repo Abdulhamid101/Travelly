@@ -4,6 +4,7 @@ import Home from "./pages/Home.jsx";
 import Plan from "./pages/TripPlanner/TripPlanner.jsx";
 import FindingTripModal from "./pages/FindingTripModal/FindingTripModal.jsx";
 import Trips from "./pages/Trips/Trips.jsx";
+import SignUp from "./pages/SIgnUp/SIgnUp.jsx";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/search" element={<FindingTripModal />} />
           <Route path="/trips" element={<Trips />} />
           <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/signup" element={<SignUp />} />
         </Route>
       </Routes>
     </BrowserRouter>
