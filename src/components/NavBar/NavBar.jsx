@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import styles from "./NavBar.module.css";
 import logo from "../../assets/logoimg.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { scrollToId } from "../../utils/scrollToId"; 
+import { scrollToId } from "../../utils/scrollToId";
+import ContactPopover from "../../pages/Contact/Contact";
+
+const PANEL_TRANSITION_MS = 280;
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const nav = useNavigate();
   const { pathname } = useLocation();
 
@@ -25,6 +29,17 @@ export default function NavBar() {
       scrollToId(id);
     }
     setOpen(false);
+    setContactOpen(false);
+  };
+
+  const openContact = (e) => {
+    e?.preventDefault?.();
+    if (open) {
+      setOpen(false);
+      setTimeout(() => setContactOpen(true), PANEL_TRANSITION_MS);
+    } else {
+      setContactOpen((s) => !s);
+    }
   };
 
   return (
@@ -66,16 +81,14 @@ export default function NavBar() {
         </Link>
       </nav>
 
-      <a
-        href="/#Contact"
+      <button
         className={styles.ctaLink}
-        onClick={(e) => {
-          e.preventDefault();
-          goto("#Contact");
-        }}
+        onClick={openContact}
+        aria-haspopup="dialog"
+        aria-expanded={contactOpen}
       >
-        Contact Us
-      </a>
+        Contact
+      </button>
 
       <button
         className={styles.menuBtn}
@@ -139,18 +152,25 @@ export default function NavBar() {
           >
             Testimonials
           </Link>
-          <Link
-            to="/#Contact"
+
+          <button
             className={styles.mobileCta}
-            onClick={(e) => {
-              e.preventDefault();
-              goto("#Contact");
-            }}
+            onClick={openContact}
+            aria-haspopup="dialog"
+            aria-expanded={contactOpen}
+            type="button"
           >
             Contact Us
-          </Link>
+          </button>
         </nav>
       </aside>
+
+      {contactOpen && (
+        <ContactPopover
+          onClose={() => setContactOpen(false)}
+          onGo={(hash) => goto(hash)}
+        />
+      )}
     </header>
   );
 }

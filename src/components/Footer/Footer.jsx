@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaTwitter, FaInstagram, FaLinkedin, FaFacebook } from "react-icons/fa";
 import styles from "./Footer.module.css";
 import logo from "../../assets/logoimg.png";
 import { scrollToId } from "../../utils/scrollToId";
+import ContactPopover from "../../pages/Contact/Contact";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Footer() {
   const nav = useNavigate();
   const { pathname } = useLocation();
+  const [contactOpen, setContactOpen] = useState(false);
 
   const goto = (hash) => {
     const id = hash.replace(/^#/, "");
@@ -18,6 +20,17 @@ export default function Footer() {
     } else {
       window.history.pushState({}, "", `/${hash}`);
       scrollToId(id);
+    }
+  };
+
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    if (pathname === "/") {
+      // Already on homepage: open popover directly
+      setContactOpen(true);
+    } else {
+      // Navigate to home and scroll to Contact section
+      goto("#Contact");
     }
   };
 
@@ -34,7 +47,6 @@ export default function Footer() {
           <p className={styles.copy}>© 2025 Travelly. All rights reserved.</p>
         </div>
 
-        {/* Footer Navigation Columns */}
         <nav className={styles.columns} aria-label="Footer navigation">
           <div className={styles.col}>
             <Link
@@ -66,15 +78,11 @@ export default function Footer() {
             >
               Popular Destinations
             </Link>
-            <Link
-              to="/#Contact"
-              onClick={(e) => {
-                e.preventDefault();
-                goto("#Contact");
-              }}
-            >
+
+            {/* Updated Contact link */}
+            <a href="/#Contact" onClick={handleContactClick}>
               Contact Us
-            </Link>
+            </a>
           </div>
         </nav>
 
@@ -114,8 +122,7 @@ export default function Footer() {
           </a>
         </div>
       </div>
-
-      {/* Bottom Footer Links */}
+ 
       <div className={styles.bottom}>
         <div className={styles.rightLinks}>
           <a href="/faq">FAQ</a>
@@ -123,6 +130,13 @@ export default function Footer() {
           <a href="/terms-of-service">Terms of Service</a>
         </div>
       </div>
+
+      {contactOpen && (
+        <ContactPopover
+          onClose={() => setContactOpen(false)}
+          onGo={(hash) => goto(hash)}
+        />
+      )}
     </footer>
   );
 }

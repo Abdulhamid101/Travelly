@@ -41,11 +41,23 @@
 }
 .ctaLink {
   justify-self: end;
-  color: #e6f0f3;
+  color: #041a17;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   font-family: Inter, system-ui;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #20bfa9, #169e8c);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease, filter 0.2s ease;
 }
+.ctaLink:hover {
+  filter: brightness(0.97);
+}
+.ctaLink:active {
+  transform: scale(0.98);
+}
+
 .menuBtn {
   justify-self: end;
   display: inline-grid;
