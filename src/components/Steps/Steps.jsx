@@ -1,16 +1,16 @@
 import React from "react";
 import { FaClipboardCheck, FaSearch, FaMapMarkedAlt } from "react-icons/fa";
 import styles from "./Steps.module.css";
-import image1 from "../../assets/Stepsimg.png";
-import image2 from "../../assets/Step2img.png";
-import image3 from "../../assets/Stepsimg3.png";
+import image1 from "../../assets/Stepsimg.webp";
+// import image2 from "../../assets/Stepsimg.webp";
+import image3 from "../../assets/Stepsimg3.webp";
 
 export default function Steps({
   id = "Steps", 
   kicker = "HOW IT WORKS",
   title = "PLAN YOUR TRIP IN 3 SIMPLE STEPS",
   blurb = "We simplify travel by finding visa-friendly destinations and ready-to-go trip bundles instantly.",
-  images = [image1, image2, image1, image3],
+  images = [image1, image1, image1, image3],
 }) {
   const steps = [
     {

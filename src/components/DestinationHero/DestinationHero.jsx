@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styles from "./DestinationHero.module.css";
-import image1 from "../../assets/Dheroimg1.png";
-import image2 from "../../assets/Dheroimg2.png";
+import image1 from "../../assets/Dheroimg1.webp";
+import image2 from "../../assets/Dheroimg2.webp";
 
 export default function DestinationHero({
   id = "Destinations",

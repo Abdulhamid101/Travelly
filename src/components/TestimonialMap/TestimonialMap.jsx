@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./TestimonialMap.module.css";
-import image1 from "../../assets/mapimg1.png";
-import image2 from "../../assets/mapimg2.png";
+import image1 from "../../assets/mapimg1.webp";
+import image2 from "../../assets/mapimg2.webp";
 import image3 from "../../assets/mapimg3.png";
-import image4 from "../../assets/mapimg4.png";
-import image5 from "../../assets/mapimg5.png";
-import image6 from "../../assets/mapimg6.png";
+import image4 from "../../assets/mapimg4.webp";
+import image5 from "../../assets/mapimg5.webp";
+import image6 from "../../assets/mapimg5.webp";
 import map from "../../assets/mapimg.jpeg";
 
 export default function TestimonialMap({ id = "Testimonials" }) {
